@@ -1,17 +1,31 @@
 import { Grid2, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Message from "../Message/Message";
-import { IMessage } from "../../pages/ChatPage";
+
 import { useAuth } from "../../hooks/useAuth";
 import { format, isSameDay } from "date-fns";
+import { IMessage } from "../../types/message";
+import { deleteDoc, doc } from "firebase/firestore";
+import { messagesCollection } from "../../firebase";
 
 const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined; loading: boolean }) => {
   const { user } = useAuth();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView();
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const renderMessages = () => {
     let lastDate: Date | null = null;
     return messages?.map((message, i) => {
+      console.log(message.createdAt, i);
       const messageDate = new Date(message.createdAt);
+
       const showDate = !lastDate || !isSameDay(lastDate, messageDate);
       lastDate = messageDate;
       return (
@@ -27,10 +41,16 @@ const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined;
               {format(messageDate, "dd MMMM yyyy")}
             </Typography>
           )}
-          <Message isUser={user?.uid === message.uid} message={message} />
+          <Message onDelete={handleDeleteMessage} isUser={user?.uid === message.uid} message={message} />
         </React.Fragment>
       );
     });
+  };
+
+  const handleDeleteMessage = async (id: string) => {
+    if (id) {
+      await deleteDoc(doc(messagesCollection, id));
+    }
   };
 
   return (
@@ -53,10 +73,9 @@ const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined;
     >
       {loading && <p>Loading...</p>}
 
-      {renderMessages()}
-      {/* {messages?.map((message, i) => (
-        <Message isUser={user?.uid === message.uid} key={i} message={message} />
-      ))} */}
+      {messages && messages.length > 0 && renderMessages()}
+
+      <div ref={messagesEndRef} />
     </Grid2>
   );
 };
