@@ -10,6 +10,7 @@ export const messageConverter: FirestoreDataConverter<IMessage> = {
       uid: message.uid,
       displayName: message.displayName,
       photoURL: message.photoURL,
+      topicId: message.topicId,
     };
   },
   fromFirestore: (snapshot, options) => {
@@ -21,6 +22,7 @@ export const messageConverter: FirestoreDataConverter<IMessage> = {
       uid: data.uid,
       displayName: data.displayName,
       photoURL: data.photoURL,
+      topicId: data.topicId,
     };
   },
 };

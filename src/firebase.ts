@@ -16,4 +16,5 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 // export const db = getFirestore(app);
+export const topicsCollection = collection(db, "topics");
 export const messagesCollection = collection(db, "messages");

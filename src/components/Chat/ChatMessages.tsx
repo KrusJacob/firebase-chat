@@ -1,12 +1,12 @@
 import { Grid2, Typography } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import Message from "../Message/Message";
-
 import { useAuth } from "../../hooks/useAuth";
 import { format, isSameDay } from "date-fns";
 import { IMessage } from "../../types/message";
 import { deleteDoc, doc } from "firebase/firestore";
 import { messagesCollection } from "../../firebase";
+import Loader from "../UI/Loader/Loader";
 
 const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined; loading: boolean }) => {
   const { user } = useAuth();
@@ -23,10 +23,14 @@ const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined;
   const renderMessages = () => {
     let lastDate: Date | null = null;
     return messages?.map((message, i) => {
-      console.log(message.createdAt, i);
+      // console.log(message.createdAt, i);
+
       const messageDate = new Date(message.createdAt);
 
-      const showDate = !lastDate || !isSameDay(lastDate, messageDate);
+      let showDate = !lastDate || !isSameDay(lastDate, messageDate);
+      if (!messageDate.getTime()) {
+        showDate = false;
+      }
       lastDate = messageDate;
       return (
         <React.Fragment key={i}>
@@ -61,7 +65,6 @@ const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined;
         border: "1px solid black",
         height: "70vh",
         width: "100%",
-        mt: 4,
         p: 1,
         pt: 0,
         borderRadius: "6px",
@@ -71,7 +74,7 @@ const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined;
         scrollbarWidth: "thin",
       }}
     >
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
 
       {messages && messages.length > 0 && renderMessages()}
 

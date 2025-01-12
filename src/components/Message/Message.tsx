@@ -1,8 +1,8 @@
 import { Avatar, Box, Grid2, IconButton, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { IMessage } from "../../types/message";
-import { Menu, Item, useContextMenu } from "react-contexify";
-import "react-contexify/ReactContexify.css";
+import MessageContextMenu from "./MessageContextMenu";
+import useMessageContextMenu from "./useMessageContextMenu";
 
 interface Props {
   message: IMessage;
@@ -11,23 +11,7 @@ interface Props {
 }
 
 const Message = ({ message, isUser, onDelete }: Props) => {
-  const { show } = useContextMenu({ id: `contextmenu-${message.id}` });
-
-  const handleContextMenu = (event: React.MouseEvent) => {
-    event.preventDefault();
-    show({ id: `contextmenu-${message.id}`, event });
-  };
-
-  const handleCopyText = () => {
-    navigator.clipboard
-      .writeText(message.text)
-      .then(() => {
-        console.log("Text copied to clipboard");
-      })
-      .catch((err) => {
-        console.error("Failed to copy text: ", err);
-      });
-  };
+  const { handleContextMenu } = useMessageContextMenu(message);
 
   return (
     <Grid2 display={"flex"} gap={1} sx={{ justifyContent: isUser ? "flex-end" : "flex-start" }}>
@@ -56,12 +40,7 @@ const Message = ({ message, isUser, onDelete }: Props) => {
           {format(message.createdAt, "HH:mm")}
         </span>
       </Box>
-      <Menu id={`contextmenu-${message.id}`}>
-        <Item onClick={handleCopyText}>Copy text</Item>
-        <Item disabled={!isUser} onClick={() => onDelete(message.id)}>
-          Delete message
-        </Item>
-      </Menu>
+      <MessageContextMenu message={message} isUser={isUser} onDelete={onDelete} />
     </Grid2>
   );
 };

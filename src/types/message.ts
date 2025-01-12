@@ -5,4 +5,5 @@ export interface IMessage {
   uid: string;
   displayName: string;
   photoURL: string | null;
+  topicId: string;
 }
