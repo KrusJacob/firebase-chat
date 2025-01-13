@@ -32,6 +32,7 @@ const TopicList = ({ onSelectTopic }: { onSelectTopic: (topicId: string) => void
       <Tabs
         variant="scrollable"
         scrollButtons="auto"
+        allowScrollButtonsMobile
         textColor="inherit"
         value={selectedTab}
         onChange={handleChange}

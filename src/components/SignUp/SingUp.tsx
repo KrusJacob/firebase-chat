@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Form from "../Form/Form";
-import { setUser } from "../../store/slices/userSlice";
 import { useNavigate } from "react-router";
 
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,14 +19,6 @@ const SignUp = () => {
       createUserWithEmailAndPassword(auth, data.email, data.password)
         .then(async ({ user }) => {
           console.log(user);
-          const token = await user.getIdToken();
-          dispatch(
-            setUser({
-              email: user.email,
-              id: user.uid,
-              token: token,
-            })
-          );
           navigate("/");
         })
         .catch(console.error)

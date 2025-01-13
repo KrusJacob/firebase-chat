@@ -6,4 +6,11 @@ export interface IMessage {
   displayName: string;
   photoURL: string | null;
   topicId: string;
+  replyTo: MessageReply | null;
+}
+
+interface MessageReply {
+  id: IMessage["id"];
+  text: IMessage["text"];
+  displayName: IMessage["displayName"];
 }

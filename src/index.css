@@ -22,10 +22,6 @@
   --contexify-activeArrow-color: #fff;
 }
 
-.red-text {
-  color: red;
-}
-
 /* HTML: <div class="loader"></div> */
 .loader {
   width: 60px;

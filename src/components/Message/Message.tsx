@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { IMessage } from "../../types/message";
 import MessageContextMenu from "./MessageContextMenu";
 import useMessageContextMenu from "./useMessageContextMenu";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   message: IMessage;
@@ -33,6 +34,14 @@ const Message = ({ message, isUser, onDelete }: Props) => {
         <Typography color="#4F93D3" fontWeight={"600"}>
           {message.displayName}
         </Typography>
+        {message.replyTo && (
+          <Box bgcolor={"#ECF6E8"} p={1} borderRadius={"8px"}>
+            <Typography color="#4F93D3" fontWeight={"600"}>
+              {message.replyTo.displayName}
+            </Typography>
+            <Typography variant="body1">{message.replyTo.text}</Typography>
+          </Box>
+        )}
         <Typography variant="body1" style={{ whiteSpace: "pre-wrap" }}>
           {message.text}
         </Typography>

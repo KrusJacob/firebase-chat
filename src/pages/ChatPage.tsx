@@ -5,19 +5,21 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db, messagesCollection } from "../firebase";
 import { query, orderBy, serverTimestamp, doc, setDoc, where } from "firebase/firestore";
 import ChatInput from "../components/Chat/ChatInput";
-import { IMessage } from "../types/message";
 import { messageConverter } from "../utils/converter";
 import TopicList from "../components/Topic/TopicList";
 import { useState } from "react";
 import ChatMessages from "../components/Chat/ChatMessages";
 import Loader from "../components/UI/Loader/Loader";
+import { useMessageContextStore } from "../store/messageContextStore";
 
 const ChatPage = () => {
   const { isAuth, loading, user } = useAuth();
   const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
+  const replyTo = useMessageContextStore((state) => state.replyTo);
+  const setReplyTo = useMessageContextStore((state) => state.setReplyTo);
+  // const [replyTo, setReplyTo] = useState<IMessage | null>(null);
 
   const messagesCollectionWithConverter = messagesCollection.withConverter(messageConverter);
-  // const messagesQuery = query(messagesCollectionWithConverter, orderBy("createdAt"));
   const messagesQuery = selectedTopicId
     ? query(messagesCollectionWithConverter, where("topicId", "==", selectedTopicId), orderBy("createdAt"))
     : null;
@@ -30,7 +32,7 @@ const ChatPage = () => {
 
   const sendMessage = async (text: string) => {
     if (text.trim() !== "" && user && selectedTopicId) {
-      console.log("send", selectedTopicId);
+      setReplyTo(null);
       const docRef = doc(messagesCollectionWithConverter);
       await setDoc(docRef, {
         id: docRef.id,
@@ -40,18 +42,19 @@ const ChatPage = () => {
         uid: user.uid,
         displayName: user.displayName || user.email!,
         topicId: selectedTopicId,
+        replyTo: replyTo ? { id: replyTo.id, displayName: replyTo.displayName, text: replyTo.text } : null,
       });
     }
   };
 
   return isAuth ? (
     <Container maxWidth={"md"}>
-      <Grid2 container gap={2} padding={1}>
+      <Grid2 container gap={1}>
         <TopicList onSelectTopic={setSelectedTopicId} />
         {selectedTopicId && (
           <>
             <ChatMessages messages={messages} loading={messagesLoading} />
-            <ChatInput sendMessage={sendMessage} />
+            <ChatInput sendMessage={sendMessage} replyTo={replyTo} clearReply={() => setReplyTo(null)} />
           </>
         )}
       </Grid2>
@@ -60,5 +63,14 @@ const ChatPage = () => {
     <Navigate to={"/login"} />
   );
 };
+
+// const CHAT_BG_COLOR = {
+//   General: "#b8dce2",
+//   Sport: "#b8dce2",
+//   Kino: "#b8dce2",
+//   Games: "#b8dce2",
+//   News: "#b8dce2",
+//   Health: "#b8dce2",
+// };
 
 export default ChatPage;
