@@ -2,7 +2,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Container, Grid2 } from "@mui/material";
 import { Navigate } from "react-router";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { db, messagesCollection } from "../firebase";
+import { messagesCollection } from "../firebase";
 import { query, orderBy, serverTimestamp, doc, setDoc, where } from "firebase/firestore";
 import ChatInput from "../components/Chat/ChatInput";
 import { messageConverter } from "../utils/converter";
@@ -17,7 +17,6 @@ const ChatPage = () => {
   const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
   const replyTo = useMessageContextStore((state) => state.replyTo);
   const setReplyTo = useMessageContextStore((state) => state.setReplyTo);
-  // const [replyTo, setReplyTo] = useState<IMessage | null>(null);
 
   const messagesCollectionWithConverter = messagesCollection.withConverter(messageConverter);
   const messagesQuery = selectedTopicId
@@ -48,7 +47,7 @@ const ChatPage = () => {
   };
 
   return isAuth ? (
-    <Container maxWidth={"md"}>
+    <Container maxWidth={"md"} sx={{ paddingBottom: 4 }}>
       <Grid2 container gap={1}>
         <TopicList onSelectTopic={setSelectedTopicId} />
         {selectedTopicId && (
