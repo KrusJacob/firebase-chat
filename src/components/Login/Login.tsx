@@ -1,19 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../store/slices/userSlice";
-import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  getAuth,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import Form from "../Form/Form";
 import { useNavigate } from "react-router";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,14 +19,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, data.email, data.password)
         .then(async ({ user }) => {
           console.log(user);
-          const token = await user.getIdToken();
-          dispatch(
-            setUser({
-              email: user.email,
-              id: user.uid,
-              token: token,
-            })
-          );
           navigate("/");
         })
         .catch(() => alert("Invalid user!"))

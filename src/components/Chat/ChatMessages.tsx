@@ -1,5 +1,5 @@
 import { Grid2, Typography } from "@mui/material";
-import React, { useEffect, useRef } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import Message from "../Message/Message";
 import { useAuth } from "../../hooks/useAuth";
 import { format, isSameDay } from "date-fns";
@@ -8,7 +8,12 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { messagesCollection } from "../../firebase";
 import Loader from "../UI/Loader/Loader";
 
-const ChatMessages = ({ messages, loading }: { messages: IMessage[] | undefined; loading: boolean }) => {
+interface Props {
+  messages: IMessage[] | undefined;
+  loading: boolean;
+}
+
+const ChatMessages = ({ messages, loading }: Props) => {
   const { user } = useAuth();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

@@ -1,6 +1,11 @@
 import { Menu, Item, useContextMenu } from "react-contexify";
 import { IMessage } from "../../types/message";
 import "react-contexify/ReactContexify.css";
+import { Typography } from "@mui/material";
+import { useMessageContextStore } from "../../store/messageContextStore";
+import ReplyIcon from "@mui/icons-material/Reply";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 interface Props {
   message: IMessage;
@@ -9,6 +14,8 @@ interface Props {
 }
 
 const MessageContextMenu = ({ message, isUser, onDelete }: Props) => {
+  const setReplyTo = useMessageContextStore((state) => state.setReplyTo);
+
   const handleCopyText = () => {
     navigator.clipboard
       .writeText(message.text)
@@ -22,9 +29,17 @@ const MessageContextMenu = ({ message, isUser, onDelete }: Props) => {
 
   return (
     <Menu className="contextMenu" id={`contextmenu-${message.id}`}>
-      <Item onClick={handleCopyText}>Copy text</Item>
+      <Item onClick={() => setReplyTo(message)}>
+        <ReplyIcon sx={{ marginRight: 1.5 }} />
+        Reply
+      </Item>
+      <Item onClick={handleCopyText}>
+        <ContentCopyIcon sx={{ marginRight: 1.5 }} />
+        Copy text
+      </Item>
       <Item disabled={!isUser} onClick={() => onDelete(message.id)}>
-        <span className="red-text">Delete message</span>
+        <DeleteForeverIcon sx={{ marginRight: 1.5 }} color="warning" />
+        <Typography color="warning">Delete message</Typography>
       </Item>
     </Menu>
   );

@@ -11,20 +11,14 @@ import {
   Tooltip,
 } from "@mui/material";
 import React from "react";
-
-import { useDispatch } from "react-redux";
-import { removeUser } from "../../../store/slices/userSlice";
 import { useAuth } from "../../../hooks/useAuth";
 import { useNavigate } from "react-router";
 import Navigation from "./Navigation";
 import { getAuth, signOut } from "firebase/auth";
 
-// const settings = ["Profile", "Logout"];
-
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const { isAuth, user, logout } = useAuth();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -37,7 +31,7 @@ const Header = () => {
 
   const logoutHadler = () => {
     logout();
-    dispatch(removeUser());
+    // dispatch(removeUser());
   };
 
   return (

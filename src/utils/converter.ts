@@ -3,15 +3,7 @@ import { IMessage } from "../types/message";
 
 export const messageConverter: FirestoreDataConverter<IMessage> = {
   toFirestore: (message: IMessage): DocumentData => {
-    return {
-      id: message.id,
-      text: message.text,
-      createdAt: message.createdAt,
-      uid: message.uid,
-      displayName: message.displayName,
-      photoURL: message.photoURL,
-      topicId: message.topicId,
-    };
+    return { ...message };
   },
   fromFirestore: (snapshot, options) => {
     const data = snapshot.data(options)!;
@@ -23,6 +15,7 @@ export const messageConverter: FirestoreDataConverter<IMessage> = {
       displayName: data.displayName,
       photoURL: data.photoURL,
       topicId: data.topicId,
+      replyTo: data.replyTo,
     };
   },
 };
