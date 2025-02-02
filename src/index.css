@@ -10,6 +10,16 @@
   box-sizing: border-box;
 }
 
+body {
+  background: rgb(128, 180, 190);
+  background: linear-gradient(
+    90deg,
+    rgba(128, 180, 190, 1) 0%,
+    rgba(237, 242, 250, 1) 50%,
+    rgba(128, 180, 190, 1) 100%
+  );
+}
+
 .contextMenu {
   --contexify-menu-bgColor: #fff;
   --contexify-separator-color: rgba(0, 0, 0, 0.2);
@@ -20,6 +30,11 @@
   --contexify-activeRightSlot-color: #fff;
   --contexify-arrow-color: #6f6e77;
   --contexify-activeArrow-color: #fff;
+}
+
+.tabs-topic .Mui-selected {
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px 4px 0 0;
 }
 
 /* HTML: <div class="loader"></div> */

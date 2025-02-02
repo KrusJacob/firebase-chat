@@ -30,6 +30,7 @@ const TopicList = ({ onSelectTopic }: { onSelectTopic: (topicId: string) => void
   return (
     <Box sx={{ mt: 1, width: "100%" }}>
       <Tabs
+        className="tabs-topic"
         variant="scrollable"
         scrollButtons="auto"
         allowScrollButtonsMobile
