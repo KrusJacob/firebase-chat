@@ -1,13 +1,12 @@
-import { Grid2, Avatar, Typography, Box, TextField, Button } from "@mui/material";
+import { Grid2, Typography, TextField, Button } from "@mui/material";
 import React from "react";
-
-import Title from "../../UI/TItle/Title";
 import ProfileCardItem from "../ProfileCardItem";
-import { useAuth } from "../../../hooks/useAuth";
-import Loader from "../../UI/Loader/Loader";
 import { Navigate } from "react-router";
 import { format } from "date-fns";
 import { updateProfile } from "firebase/auth";
+import { useAuth } from "@/hooks/useAuth";
+import Loader from "@/components/UI/Loader/Loader";
+import Title from "@/components/UI/TItle/Title";
 
 const DetailsTabItem = () => {
   const { user, loading } = useAuth();

@@ -1,11 +1,10 @@
 import { Box, Avatar, Grid2, Typography } from "@mui/material";
-import React from "react";
-import { useAuth } from "../../../hooks/useAuth";
-import { defaultUrlAvatar } from "../../../constant/defaultUserAvatar";
 import { Navigate } from "react-router";
-import Loader from "../../UI/Loader/Loader";
-import Title from "../../UI/TItle/Title";
 import ProfileCardItem from "../ProfileCardItem";
+import Loader from "@/components/UI/Loader/Loader";
+import Title from "@/components/UI/TItle/Title";
+import { defaultUrlAvatar } from "@/constant/defaultUserAvatar";
+import { useAuth } from "@/hooks/useAuth";
 
 const ProfileTabItem = () => {
   const { user, loading } = useAuth();

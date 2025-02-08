@@ -16,11 +16,10 @@ const ProfileNavigation = ({ tabs }: { tabs: Props[] }) => {
     <>
       <Tabs
         orientation="vertical"
-        variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider", mr: 2, width: "240px" }}
+        sx={{ borderRight: 1, borderColor: "divider", width: "240px" }}
       >
         {tabs.map((tab, index) => (
           <Tab

@@ -1,10 +1,10 @@
 import { Box, Button, Grid2, Typography } from "@mui/material";
 import { deleteUser } from "firebase/auth";
 import { Navigate } from "react-router";
-import { useAuth } from "../../../hooks/useAuth";
-import Loader from "../../UI/Loader/Loader";
-import Title from "../../UI/TItle/Title";
 import ProfileCardItem from "../ProfileCardItem";
+import { useAuth } from "@/hooks/useAuth";
+import Loader from "@/components/UI/Loader/Loader";
+import Title from "@/components/UI/TItle/Title";
 
 const SettingsTabItem = () => {
   const { user, loading } = useAuth();
