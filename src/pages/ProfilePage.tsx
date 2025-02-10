@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import { Navigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/UI/Loader/Loader";
-import { useState } from "react";
 import ProfileNavigation from "../components/Profile/ProfileNavigation";
 import ProfileTabItem from "../components/Profile/Tabs/ProfileTabItem";
 import DetailsTabItem from "../components/Profile/Tabs/DetailsTabItem";
