@@ -22,6 +22,16 @@ const Form = ({ title, handleSubmit, isLoading, handleLoginWithGoodle }: Props) 
             type="password"
             label="password"
           />
+          {!handleLoginWithGoodle && (
+            <TextField
+              slotProps={{ htmlInput: { minLength: 6 } }}
+              size="small"
+              required
+              name="confirmPassword"
+              type="password"
+              label="repeat password"
+            />
+          )}
           <Button disabled={isLoading} type="submit" form="form" size="large" variant="contained">
             {title}
           </Button>
