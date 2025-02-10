@@ -7,6 +7,7 @@ import { updateProfile } from "firebase/auth";
 import { useAuth } from "@/hooks/useAuth";
 import Loader from "@/components/UI/Loader/Loader";
 import Title from "@/components/UI/TItle/Title";
+import { toast } from "react-toastify";
 
 const DetailsTabItem = () => {
   const { user, loading } = useAuth();
@@ -26,11 +27,13 @@ const DetailsTabItem = () => {
     if (user && confirmed) {
       setIsUpdating(true);
       try {
-        await updateProfile(user, { displayName });
-        alert("Profile updated successfully!");
+        await toast.promise(updateProfile(user, { displayName }), {
+          pending: "Updating profile...",
+          success: "Profile updated successfully",
+          error: "Failed to update profile",
+        });
       } catch (error) {
         console.error("Error updating profile:", error);
-        alert("Failed to update profile.");
       } finally {
         setIsUpdating(false);
       }

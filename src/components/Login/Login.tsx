@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import Form from "../Form/Form";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +22,7 @@ const Login = () => {
           console.log(user);
           navigate("/");
         })
-        .catch(() => alert("Invalid user!"))
+        .catch(() => toast.error("Invalid user!"))
         .finally(() => setIsLoading(false));
     }
   };
@@ -36,7 +37,7 @@ const Login = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         navigate("/");
       })
-      .catch((error) => alert("Invalid user!"))
+      .catch((error) => toast.error("Invalid user!"))
       .finally(() => setIsLoading(false));
   };
 

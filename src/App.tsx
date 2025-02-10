@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router";
-
+import { ToastContainer } from "react-toastify";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -21,6 +21,7 @@ function App() {
           <Route path="/chat" element={<ChatPage />} />
         </Routes>
       </Container>
+      <ToastContainer autoClose={2500} hideProgressBar />
     </main>
   );
 }

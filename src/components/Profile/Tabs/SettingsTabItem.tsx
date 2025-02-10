@@ -5,6 +5,7 @@ import ProfileCardItem from "../ProfileCardItem";
 import { useAuth } from "@/hooks/useAuth";
 import Loader from "@/components/UI/Loader/Loader";
 import Title from "@/components/UI/TItle/Title";
+import { toast } from "react-toastify";
 
 const SettingsTabItem = () => {
   const { user, loading } = useAuth();
@@ -22,11 +23,13 @@ const SettingsTabItem = () => {
       try {
         const confirmed = window.confirm("Are you sure you want to delete your account?");
         if (!confirmed) return;
-        await deleteUser(user);
-        alert("User deleted successfully");
+        await toast.promise(deleteUser(user), {
+          pending: "Deleting user...",
+          success: "User deleted successfully",
+          error: "Failed to delete user",
+        });
       } catch (error) {
         console.error("Error deleting user:", error);
-        alert("Failed to delete user");
       }
     }
   };

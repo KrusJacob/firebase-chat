@@ -1,6 +1,7 @@
 import { Menu, Item, useContextMenu } from "react-contexify";
 import { IMessage } from "../../types/message";
 import "react-contexify/ReactContexify.css";
+import { toast } from "react-toastify";
 import { Typography } from "@mui/material";
 import { useMessageContextStore } from "../../store/messageContextStore";
 import ReplyIcon from "@mui/icons-material/Reply";
@@ -20,10 +21,11 @@ const MessageContextMenu = ({ message, isUser, onDelete }: Props) => {
     navigator.clipboard
       .writeText(message.text)
       .then(() => {
-        console.log("Text copied to clipboard");
+        toast.success("Text copied to clipboard");
       })
       .catch((err) => {
         console.error("Failed to copy text: ", err);
+        toast.error("Failed to copy text");
       });
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Form from "../Form/Form";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +18,7 @@ const SignUp = () => {
       confirmPassword: formData.get("confirmPassword") as string,
     };
     if (!checkPassword(password, confirmPassword)) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!");
       return;
     }
     if (email && password) {
@@ -27,8 +28,12 @@ const SignUp = () => {
         .then(async ({ user }) => {
           console.log(user);
           navigate("/");
+          toast.success("You successfully registered!");
         })
-        .catch(console.error)
+        .catch((err) => {
+          console.error(err);
+          toast.error("Error creating user, please try again.");
+        })
         .finally(() => setIsLoading(false));
     }
   };
