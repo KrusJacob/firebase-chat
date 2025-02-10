@@ -10,11 +10,18 @@ interface Props {
 
 const Form = ({ title, handleSubmit, isLoading, handleLoginWithGoodle }: Props) => {
   return (
-    <Container maxWidth={"sm"}>
+    <Container maxWidth={"sm"} sx={{ backgroundColor: "white", padding: 4, borderRadius: 2 }}>
       <form onSubmit={handleSubmit} id="form">
         <Stack gap={2}>
           <TextField size="small" required name="email" type="email" label="email" />
-          <TextField size="small" required name="password" type="password" label="password" />
+          <TextField
+            slotProps={{ htmlInput: { minLength: 6 } }}
+            size="small"
+            required
+            name="password"
+            type="password"
+            label="password"
+          />
           <Button disabled={isLoading} type="submit" form="form" size="large" variant="contained">
             {title}
           </Button>
