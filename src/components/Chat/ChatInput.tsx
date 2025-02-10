@@ -41,7 +41,7 @@ const ChatInput = ({ sendMessage, replyTo, clearReply }: Props) => {
         width: "100%",
         position: "relative",
         // gap: 0.5,
-        bgcolor: "white",
+        // bgcolor: "white",
       }}
     >
       {replyTo && (
@@ -79,7 +79,7 @@ const ChatInput = ({ sendMessage, replyTo, clearReply }: Props) => {
           multiline
           size="small"
           maxRows={4}
-          sx={{ flexGrow: 1 }}
+          sx={{ flexGrow: 1, bgcolor: "white" }}
         />
 
         <IconButton onClick={openEmojiPicker}> 😊 </IconButton>

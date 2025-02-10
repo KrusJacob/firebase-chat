@@ -1,61 +1,24 @@
 import { useAuth } from "../hooks/useAuth";
 import { Container, Grid2 } from "@mui/material";
 import { Navigate } from "react-router";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import { messagesCollection } from "../firebase";
-import { query, orderBy, serverTimestamp, doc, setDoc, where } from "firebase/firestore";
-import ChatInput from "../components/Chat/ChatInput";
-import { messageConverter } from "../utils/converter";
 import TopicList from "../components/Topic/TopicList";
 import { useState } from "react";
-import ChatMessages from "../components/Chat/ChatMessages";
 import Loader from "../components/UI/Loader/Loader";
-import { useMessageContextStore } from "../store/messageContextStore";
+import ChatWrapper from "../components/Chat/ChatWrapper";
 
 const ChatPage = () => {
   const { isAuth, loading, user } = useAuth();
   const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
-  const replyTo = useMessageContextStore((state) => state.replyTo);
-  const setReplyTo = useMessageContextStore((state) => state.setReplyTo);
-
-  const messagesCollectionWithConverter = messagesCollection.withConverter(messageConverter);
-  const messagesQuery = selectedTopicId
-    ? query(messagesCollectionWithConverter, where("topicId", "==", selectedTopicId), orderBy("createdAt"))
-    : null;
-
-  const [messages, messagesLoading, error] = useCollectionData(messagesQuery);
 
   if (loading) {
     return <Loader />;
   }
 
-  const sendMessage = async (text: string) => {
-    if (text.trim() !== "" && user && selectedTopicId) {
-      setReplyTo(null);
-      const docRef = doc(messagesCollectionWithConverter);
-      await setDoc(docRef, {
-        id: docRef.id,
-        text,
-        photoURL: user.photoURL,
-        createdAt: serverTimestamp(),
-        uid: user.uid,
-        displayName: user.displayName || user.email!,
-        topicId: selectedTopicId,
-        replyTo: replyTo ? { id: replyTo.id, displayName: replyTo.displayName, text: replyTo.text } : null,
-      });
-    }
-  };
-
   return isAuth ? (
     <Container maxWidth={"md"} sx={{ paddingBottom: 4 }}>
       <Grid2 container gap={1}>
         <TopicList onSelectTopic={setSelectedTopicId} />
-        {selectedTopicId && (
-          <>
-            <ChatMessages messages={messages} loading={messagesLoading} />
-            <ChatInput sendMessage={sendMessage} replyTo={replyTo} clearReply={() => setReplyTo(null)} />
-          </>
-        )}
+        {selectedTopicId && <ChatWrapper user={user} selectedTopicId={selectedTopicId} />}
       </Grid2>
     </Container>
   ) : (
