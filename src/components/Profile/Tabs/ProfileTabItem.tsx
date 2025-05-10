@@ -23,22 +23,16 @@ const ProfileTabItem = () => {
       <ProfileCardItem title="Your data">
         <Box sx={{ display: "flex", gap: 2 }}>
           <Avatar
-            sx={{ width: { xs: 80, sm: 140 }, height: { xs: 80, sm: 140 } }}
+            sx={{ width: { xs: 80, sm: 100, lg: 140 }, height: { xs: 80, sm: 100, lg: 140 } }}
             alt={String(user.email)}
             src={user.photoURL || defaultUrlAvatar}
           />
           <Grid2 sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", alignItems: "center", gap: "0 20px" }}>
-            <Typography sx={{ color: "#7c7c7c" }} fontSize={20}>
-              Email
-            </Typography>
+            <Typography sx={{ color: "#7c7c7c", fontSize: { xs: 16, sm: 18 } }}>Email</Typography>
             {user.email}
-            <Typography sx={{ color: "#7c7c7c" }} fontSize={20}>
-              Name
-            </Typography>
+            <Typography sx={{ color: "#7c7c7c", fontSize: { xs: 16, sm: 18 } }}>Name</Typography>
             {user.displayName || user.email}
-            <Typography sx={{ color: "#7c7c7c" }} fontSize={20}>
-              Phone number
-            </Typography>
+            <Typography sx={{ color: "#7c7c7c", fontSize: { xs: 16, sm: 18 } }}>Phone number</Typography>
             {user.phoneNumber}
           </Grid2>
         </Box>

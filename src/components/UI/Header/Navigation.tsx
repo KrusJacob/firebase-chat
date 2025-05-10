@@ -1,6 +1,6 @@
-import { Box, Drawer, IconButton, Link, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Box, Drawer, IconButton, Link, List, ListItem, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useState } from "react";
 
 const navigateLinks = [
@@ -9,7 +9,10 @@ const navigateLinks = [
 ];
 const Navigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  console.log(location.pathname);
 
   const toggleDrawer = (open: boolean) => () => {
     setIsDrawerOpen(open);
@@ -37,7 +40,7 @@ const Navigation = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }} display={"flex"} alignItems={"center"} gap={4}>
+    <Box sx={{ flexGrow: 1 }} display={"flex"} alignItems={"center"} gap={2}>
       <IconButton
         onClick={toggleDrawer(true)}
         size="large"
@@ -50,7 +53,17 @@ const Navigation = () => {
       </IconButton>
       {navigateLinks.map((link) => (
         <Link
-          sx={{ display: { xs: "none", md: "block", cursor: "pointer" } }}
+          sx={{
+            display: {
+              xs: "none",
+              md: "block",
+              cursor: "pointer",
+              border: "1px solid transparent",
+              paddingInline: 8,
+              borderRadius: 6,
+              borderColor: location.pathname === link.path ? "#ffffff" : "transparent",
+            },
+          }}
           key={link.name}
           onClick={() => navigate(link.path)}
           color="inherit"

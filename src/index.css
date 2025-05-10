@@ -20,6 +20,10 @@ body {
   );
 }
 
+a {
+  text-decoration: none;
+}
+
 .contextMenu {
   --contexify-menu-bgColor: #fff;
   --contexify-separator-color: rgba(0, 0, 0, 0.2);

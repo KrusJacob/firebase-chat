@@ -38,7 +38,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <Box sx={{ display: "flex", mt: 4, gap: 4 }}>
+    <Box>
       <ProfileNavigation tabs={tabs} />
     </Box>
   );

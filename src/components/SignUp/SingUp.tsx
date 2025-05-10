@@ -27,7 +27,7 @@ const SignUp = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then(async ({ user }) => {
           console.log(user);
-          navigate("/");
+          navigate("/chat");
           toast.success("You successfully registered!");
         })
         .catch((err) => {

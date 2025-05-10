@@ -53,7 +53,7 @@ const DetailsTabItem = () => {
               size="small"
             />
             <TextField type="tel" label="Phone" size="small" defaultValue={user.phoneNumber} />
-            <br />
+
             <Button disabled={isUpdating} onClick={handleUpdateName} variant="contained">
               Save changes
             </Button>

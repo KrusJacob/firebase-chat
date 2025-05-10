@@ -45,7 +45,7 @@ const ChatMessages = ({ messages, loading }: Props) => {
               top={0}
               variant="subtitle2"
               color="textSecondary"
-              sx={{ textAlign: "center", p: 0.5, backgroundColor: "inherit", zIndex: 1 }}
+              sx={{ textAlign: "center", p: 0.5, backgroundColor: "inherit", zIndex: 1, margin: "0 -1px" }}
             >
               {format(messageDate, "dd MMMM yyyy")}
             </Typography>
