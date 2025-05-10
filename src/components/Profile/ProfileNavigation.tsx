@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 import React, { ReactNode } from "react";
 
 interface Props {
@@ -7,23 +7,27 @@ interface Props {
 }
 const ProfileNavigation = ({ tabs }: { tabs: Props[] }) => {
   const [value, setValue] = React.useState(0);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
-    <>
+    <Box sx={{ display: { xs: "block", sm: "flex" }, mt: 4, gap: 2 }}>
       <Tabs
-        orientation="vertical"
+        orientation={isSmallScreen ? "horizontal" : "vertical"}
         value={value}
+        variant={isSmallScreen ? "scrollable" : "standard"}
+        scrollButtons
+        allowScrollButtonsMobile
         onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider", width: "240px" }}
+        sx={{ borderRight: isSmallScreen ? 0 : 1, borderColor: "divider", pb: 4 }}
       >
         {tabs.map((tab, index) => (
           <Tab
-            sx={{ px: 4, fontSize: 20, width: "max-content" }}
+            sx={{ pr: { xs: 0, sm: 8 }, fontSize: { xs: 16, sm: 20 }, width: "max-content" }}
             key={index}
             label={tab.name}
             {...a11yProps(index)}
@@ -35,7 +39,7 @@ const ProfileNavigation = ({ tabs }: { tabs: Props[] }) => {
           {tab.component}
         </TabPanel>
       ))}
-    </>
+    </Box>
   );
 };
 

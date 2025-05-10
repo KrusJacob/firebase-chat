@@ -18,7 +18,7 @@ const ProfileCardItem = ({ title, children }: { title: string; children: React.R
       <Box
         sx={{
           bgcolor: "white",
-          p: 4,
+          p: { xs: 2, sm: 4 },
 
           borderRadius: "0 0 8px 8px",
         }}
