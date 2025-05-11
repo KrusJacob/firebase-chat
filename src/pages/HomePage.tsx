@@ -1,6 +1,8 @@
 import { Box, Container, Typography, Link } from "@mui/material";
+import { useNavigate } from "react-router";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <Container>
       <Box display={"flex"} flexDirection={"column"} gap={4} alignItems={"center"} paddingY={10}>
@@ -13,10 +15,11 @@ const HomePage = () => {
           let's listen, let's grow – together!
         </Typography>
         <Link
-          href={"/chat"}
+          onClick={() => navigate("/chat")}
           sx={{
             padding: "4px 12px",
             backgroundColor: "#1976D2",
+            cursor: "pointer",
             border: "1px solid black",
             color: "white",
             fontSize: 24,
